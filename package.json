@@ -1,0 +1,9 @@
+{
+  "name": "franky-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static Franky Frontier dashboard",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

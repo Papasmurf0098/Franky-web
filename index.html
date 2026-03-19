@@ -312,7 +312,7 @@
           <h1>Franky Frontier</h1>
           <p>At-Home AI Opportunity Radar. GitHub-first dashboard for findings, summaries, watchlist movement, and foundational tools — built to stay practical, current, and allergic to hype.</p>
         </div>
-        <div class="hero-badge">V2 JSON</div>
+        <div class="hero-badge" id="dataSourceBadge">V2 JSON</div>
       </div>
       <div class="hero-grid" id="heroGrid"></div>
     </section>
@@ -435,15 +435,26 @@
   </div>
 
   <script>
-    const FRANKY_CONFIG = {
-      dataUrl: "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec"
-    };
+    const FRANKY_DEFAULT_DATA_URL = "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec";
+    const FRANKY_CONFIG = (() => {
+      const params = new URLSearchParams(window.location.search);
+      const overrideDataUrl = params.get("data");
+      return {
+        dataUrl: overrideDataUrl || FRANKY_DEFAULT_DATA_URL,
+        fallbackDataUrl: "./data/franky-data.sample.json"
+      };
+    })();
 
     const state = {
       findings: [],
       summaries: [],
       watchlist: [],
       tools: [],
+      meta: {
+        dataSource: "",
+        usedFallback: false,
+        updatedAt: ""
+      },
       filters: {
         runId: "",
         priority: "",
@@ -471,7 +482,8 @@
       showAllBtn: document.getElementById("showAllBtn"),
       latestRunBtn: document.getElementById("latestRunBtn"),
       highPriorityBtn: document.getElementById("highPriorityBtn"),
-      frontierOnlyBtn: document.getElementById("frontierOnlyBtn")
+      frontierOnlyBtn: document.getElementById("frontierOnlyBtn"),
+      dataSourceBadge: document.getElementById("dataSourceBadge")
     };
 
     function safeText(value) {
@@ -567,17 +579,45 @@
       }));
     }
 
+    async function fetchFrankyPayload(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Data feed returned ${response.status} (${url})`);
+      return response.json();
+    }
+
     async function loadFrankyData() {
-      const response = await fetch(FRANKY_CONFIG.dataUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Data feed returned ${response.status}`);
-      const payload = await response.json();
-      return {
-        findings: normalizeFindings(payload.findings || []),
-        summaries: normalizeSummaries(payload.summaries || []),
-        watchlist: normalizeWatchlist(payload.watchlist || []),
-        tools: normalizeTools(payload.foundationalTools || payload.tools || []),
-        updatedAt: payload.updatedAt || ""
-      };
+      const dataSources = [FRANKY_CONFIG.dataUrl];
+      if (FRANKY_CONFIG.fallbackDataUrl && FRANKY_CONFIG.fallbackDataUrl !== FRANKY_CONFIG.dataUrl) {
+        dataSources.push(FRANKY_CONFIG.fallbackDataUrl);
+      }
+
+      let lastError;
+      for (let idx = 0; idx < dataSources.length; idx += 1) {
+        const source = dataSources[idx];
+        try {
+          const payload = await fetchFrankyPayload(source);
+          return {
+            findings: normalizeFindings(payload.findings || []),
+            summaries: normalizeSummaries(payload.summaries || []),
+            watchlist: normalizeWatchlist(payload.watchlist || []),
+            tools: normalizeTools(payload.foundationalTools || payload.tools || []),
+            updatedAt: payload.updatedAt || "",
+            dataSource: source,
+            usedFallback: idx > 0
+          };
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error("No data source could be loaded.");
+    }
+
+    function renderDataSourceBadge() {
+      if (!els.dataSourceBadge) return;
+      const mode = state.meta.usedFallback ? "Sample JSON" : "Live JSON";
+      const updated = state.meta.updatedAt ? ` • ${state.meta.updatedAt}` : "";
+      els.dataSourceBadge.textContent = `${mode}${updated}`;
     }
 
     function getLatestRunId() {
@@ -818,6 +858,10 @@
         state.summaries = data.summaries || [];
         state.watchlist = data.watchlist || [];
         state.tools = data.tools || [];
+        state.meta.dataSource = data.dataSource || "";
+        state.meta.usedFallback = Boolean(data.usedFallback);
+        state.meta.updatedAt = data.updatedAt || "";
+        renderDataSourceBadge();
         populateRunFilter();
         renderHero();
         renderSummaries();
@@ -827,6 +871,7 @@
         bindEvents();
       } catch (error) {
         console.error(error);
+        if (els.dataSourceBadge) els.dataSourceBadge.textContent = "Load failed";
         document.querySelector(".app").innerHTML = `
           <section class="panel">
             <div class="section-header">
