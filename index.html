@@ -312,10 +312,11 @@
           <h1>Franky Frontier</h1>
           <p>At-Home AI Opportunity Radar. GitHub-first dashboard for findings, summaries, watchlist movement, and foundational tools — built to stay practical, current, and allergic to hype.</p>
         </div>
-        <div class="hero-badge">V2 JSON</div>
+        <div class="hero-badge" id="heroBadge">Loading…</div>
       </div>
       <div class="hero-grid" id="heroGrid"></div>
     </section>
+    <div class="notice" id="dataNotice" hidden></div>
 
     <section class="panel">
       <div class="section-header">
@@ -434,6 +435,7 @@
     </section>
   </div>
 
+  <script src="./franky-data.local.js"></script>
   <script>
     const FRANKY_CONFIG = {
       dataUrl: "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec"
@@ -444,6 +446,8 @@
       summaries: [],
       watchlist: [],
       tools: [],
+      sourceMode: "loading",
+      sourceDetail: "",
       filters: {
         runId: "",
         priority: "",
@@ -458,6 +462,8 @@
 
     const els = {
       heroGrid: document.getElementById("heroGrid"),
+      heroBadge: document.getElementById("heroBadge"),
+      dataNotice: document.getElementById("dataNotice"),
       summaryGrid: document.getElementById("summaryGrid"),
       findingsGrid: document.getElementById("findingsGrid"),
       watchGrid: document.getElementById("watchGrid"),
@@ -567,17 +573,58 @@
       }));
     }
 
-    async function loadFrankyData() {
-      const response = await fetch(FRANKY_CONFIG.dataUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Data feed returned ${response.status}`);
-      const payload = await response.json();
+    function normalizePayload(payload, sourceMode = "live", sourceDetail = "") {
       return {
         findings: normalizeFindings(payload.findings || []),
         summaries: normalizeSummaries(payload.summaries || []),
         watchlist: normalizeWatchlist(payload.watchlist || []),
         tools: normalizeTools(payload.foundationalTools || payload.tools || []),
-        updatedAt: payload.updatedAt || ""
+        updatedAt: payload.updatedAt || "",
+        sourceMode,
+        sourceDetail
       };
+    }
+
+    function getBundledSnapshot() {
+      if (!window.FRANKY_LOCAL_DATA) {
+        throw new Error("Bundled snapshot is missing.");
+      }
+      return normalizePayload(window.FRANKY_LOCAL_DATA, "fallback");
+    }
+
+    async function loadFrankyData() {
+      try {
+        const response = await fetch(FRANKY_CONFIG.dataUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Data feed returned ${response.status}`);
+        const payload = await response.json();
+        const updatedAt = payload.updatedAt ? `Live feed updated ${payload.updatedAt}.` : "Loaded from the live feed.";
+        return normalizePayload(payload, "live", updatedAt);
+      } catch (error) {
+        const bundled = getBundledSnapshot();
+        return {
+          ...bundled,
+          sourceDetail: `Live feed unavailable (${error.message}). Using the bundled snapshot in this repository instead.`
+        };
+      }
+    }
+
+    function renderDataNotice() {
+      const usingFallback = state.sourceMode === "fallback";
+      els.heroBadge.textContent = usingFallback ? "Local Snapshot" : "Live Feed";
+
+      if (!usingFallback) {
+        els.dataNotice.hidden = true;
+        els.dataNotice.innerHTML = "";
+        return;
+      }
+
+      els.dataNotice.hidden = false;
+      els.dataNotice.innerHTML = `
+        <div class="section-body">
+          <div class="headline">Running from bundled local data</div>
+          <div class="meta">${safeText(state.sourceDetail)}</div>
+        </div>
+      `;
     }
 
     function getLatestRunId() {
@@ -818,6 +865,9 @@
         state.summaries = data.summaries || [];
         state.watchlist = data.watchlist || [];
         state.tools = data.tools || [];
+        state.sourceMode = data.sourceMode || "live";
+        state.sourceDetail = data.sourceDetail || "";
+        renderDataNotice();
         populateRunFilter();
         renderHero();
         renderSummaries();

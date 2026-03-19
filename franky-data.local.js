@@ -1,0 +1,205 @@
+window.FRANKY_LOCAL_DATA = {
+  "findings": [
+    {
+      "Date": "2026-03-12",
+      "Run ID": "2026-03-12-FF01",
+      "Headline": "ChatGPT Projects now support app-linked sources, saved chats, and ad-hoc text for persistent work context",
+      "Source + Source Tier": "OpenAI Help Center release notes + Projects help page (Tier 1)",
+      "Summary": "OpenAI updated Projects so users can add sources from app links, save useful chat outputs into a project, and paste ad-hoc text. Supported app links include Google Drive files/folders and Slack channels, improving ChatGPT as a reusable solo research and operations workspace.",
+      "Device Access + Technical Barrier": "Both | No-code",
+      "Repeat Relevance Marker": "",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "2026-03-12-FF01",
+      "Headline": "Make launched next-generation AI Agents with reasoning visibility and file handling",
+      "Source + Source Tier": "Make official blog + Make pricing (Tier 1)",
+      "Summary": "Make announced next-generation AI Agents with a real-time Reasoning Panel and support for PDFs, images, and CSVs inside workflows. This makes document-heavy automation more practical for solo operators.",
+      "Device Access + Technical Barrier": "Laptop-first | Low-code",
+      "Repeat Relevance Marker": "",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "2026-03-12-FF01",
+      "Headline": "Zapier added AI Guardrails and surfaced reusable agent templates in the main templates hub",
+      "Source + Source Tier": "Zapier official product updates + Help Center + pricing (Tier 1)",
+      "Summary": "Zapier introduced AI Guardrails for screening workflow data and outputs for PII, prompt injection, jailbreak attempts, toxicity, and sentiment. It also moved agent templates into its main templates experience.",
+      "Device Access + Technical Barrier": "Both | No-code to low-code",
+      "Repeat Relevance Marker": "",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "FF-2026-03-12-TEST",
+      "Headline": "OpenAI deep research now supports tighter source control and broader connected-app research",
+      "Source + Source Tier": "OpenAI Help Center (Tier 1)",
+      "Summary": "OpenAI says deep research now allows users to focus research on specific websites and a larger collection of connected apps as trusted sources. This improves credibility and makes recurring research loops more controllable.",
+      "Device Access + Technical Barrier": "Both | Low-to-medium technical barrier",
+      "Repeat Relevance Marker": "R1",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "FF-2026-03-12-TEST",
+      "Headline": "ChatGPT Projects support app-linked sources including Google Drive and Slack",
+      "Source + Source Tier": "OpenAI Help Center (Tier 1)",
+      "Summary": "OpenAI\u2019s Projects documentation says supported app links include Google Drive files/folders and Slack channels, making Projects more viable as a persistent research workspace for recurring AI monitoring and synthesis.",
+      "Device Access + Technical Barrier": "Both | Low technical barrier",
+      "Repeat Relevance Marker": "R1",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "FF-2026-03-12-TEST",
+      "Headline": "Make launched next-generation AI Agents with reasoning visibility and file-aware workflows",
+      "Source + Source Tier": "Make official blog (Tier 1)",
+      "Summary": "Make highlighted a Reasoning Panel and easier tool/file use inside the scenario canvas, improving the practicality of no-code document automation and workflow orchestration for solo operators.",
+      "Device Access + Technical Barrier": "Laptop-first | Low-code",
+      "Repeat Relevance Marker": "R1",
+      "Priority": "High"
+    },
+    {
+      "Date": "2026-03-12",
+      "Run ID": "FF-2026-03-12-TEST",
+      "Headline": "Zapier introduced AI Guardrails and expanded governance-oriented automation positioning",
+      "Source + Source Tier": "Zapier official blog (Tier 1)",
+      "Summary": "Zapier emphasized AI Guardrails, governance, safer data handling, and production-readiness, which is relevant for home-based users building intake, lead, or document workflows.",
+      "Device Access + Technical Barrier": "Both | No-code to low-code",
+      "Repeat Relevance Marker": "R1",
+      "Priority": "High"
+    }
+  ],
+  "watchlist": [
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Date Added": "2026-03-12",
+      "Item / Trend": "ChatGPT Projects as a full solo operating system",
+      "Category": "Workspace / knowledge layer",
+      "Why It\u2019s Being Watched": "OpenAI is pushing Projects toward persistent context, reusable outputs, and app-linked knowledge, which could make it the center of a one-person business stack.",
+      "What Still Needs Confirmation": "Broader connector depth, sync reliability, and how well project memory scales in heavier real-world use.",
+      "Source Lead": "OpenAI Help Center",
+      "Priority": "High",
+      "Status": "Watching",
+      "Last Reviewed": "2026-03-12",
+      "Notes": "Google Drive in Projects can be searched/accessed, but does not pre-sync when added within a project."
+    },
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Date Added": "2026-03-12",
+      "Item / Trend": "Safety screening as a default layer in no-code AI automation",
+      "Category": "Workflow governance",
+      "Why It\u2019s Being Watched": "Zapier\u2019s new Guardrails suggest the market is shifting toward embedded AI safety and compliance checks for routine business automations.",
+      "What Still Needs Confirmation": "Practical cost impact, false-positive rates, and whether solo users adopt these checks outside regulated workflows.",
+      "Source Lead": "Zapier",
+      "Priority": "Medium",
+      "Status": "Watching",
+      "Last Reviewed": "2026-03-12",
+      "Notes": "Strong relevance for client intake, lead handling, and sensitive document flows."
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Date Added": "2026-03-12",
+      "Item / Trend": "ChatGPT Projects becoming a solo research operating system",
+      "Category": "Workspace / knowledge layer",
+      "Why It\u2019s Being Watched": "Projects now support more persistent context structures and app-linked sources, making them increasingly suitable for recurring monitored workflows.",
+      "What Still Needs Confirmation": "Reliability under heavier use, connector breadth, and how cleanly recurring research outputs accumulate over time.",
+      "Source Lead": "OpenAI",
+      "Priority": "High",
+      "Status": "Active Watch",
+      "Last Reviewed": "2026-03-12",
+      "Notes": ""
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Date Added": "2026-03-12",
+      "Item / Trend": "Governance and safety layers becoming standard in no-code AI automation",
+      "Category": "Workflow governance",
+      "Why It\u2019s Being Watched": "Zapier\u2019s recent product direction indicates a shift toward safer AI deployment and more operational controls.",
+      "What Still Needs Confirmation": "Real-world adoption by solo operators, pricing friction, and whether guardrails meaningfully reduce bad workflow outcomes.",
+      "Source Lead": "Zapier",
+      "Priority": "Medium",
+      "Status": "Active Watch",
+      "Last Reviewed": "2026-03-12",
+      "Notes": ""
+    }
+  ],
+  "summaries": [
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "March 11, 2026 to March 12, 2026",
+      "Section": "What\u2019s New Since Last Run",
+      "Summary": "The strongest practical shift is that ChatGPT Projects are becoming a more usable working memory layer, while Make and Zapier are pushing agentic automation toward more inspectable and safer production use for solo operators.",
+      "Overall Confidence / Notes": "Medium-high confidence based on official OpenAI, Make, and Zapier sources."
+    },
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "March 11, 2026 to March 12, 2026",
+      "Section": "Key Things to Watch Going Forward",
+      "Summary": "Watch whether ChatGPT Projects become the default solo knowledge cockpit, whether visible agent reasoning becomes the winning trust model, and whether safety layers become mandatory in agentic workflows.",
+      "Overall Confidence / Notes": "Important caveat: Google Drive in Projects can be searched and accessed but does not pre-sync when added inside a project."
+    },
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "March 11, 2026 to March 12, 2026",
+      "Section": "At-Home Uses",
+      "Summary": "Use ChatGPT Projects as a research-and-briefing hub, Make as a file-based ops assistant, and Zapier for guardrailed lead handling or inbox triage.",
+      "Overall Confidence / Notes": "Useful for solo consultants, marketers, researchers, and small service operators."
+    },
+    {
+      "Run ID": "2026-03-12-FF01",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "March 11, 2026 to March 12, 2026",
+      "Section": "Emerging Opportunities",
+      "Summary": "The clearest opportunities are AI operator-as-a-service for small businesses, one-person niche research desks, and client-facing mini apps built on top of AI workflows.",
+      "Overall Confidence / Notes": "Most practical when context, execution, and client-facing delivery are combined."
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "Last 5 days",
+      "Section": "What\u2019s New Since Last Run",
+      "Summary": "Deep research and project-based context are getting more useful together, while Make\u2019s visible reasoning and Zapier\u2019s governance push make no-code AI automation more practical.",
+      "Overall Confidence / Notes": "Strong fit for recurring research loops and home-based commercial use."
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "Last 5 days",
+      "Section": "Key Things to Watch Going Forward",
+      "Summary": "Watch whether ChatGPT Projects become the main control room for solo research systems, whether visible reasoning becomes standard, and whether safety layers become default infrastructure.",
+      "Overall Confidence / Notes": "Direction is promising but operational maturity still needs confirmation."
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "Last 5 days",
+      "Section": "At-Home Uses",
+      "Summary": "A persistent niche research desk, document-based automation for solo services businesses, and guardrailed lead handling are the most practical current uses.",
+      "Overall Confidence / Notes": "Best results come from repeatable workflows and persistent context."
+    },
+    {
+      "Run ID": "FF-2026-03-12-TEST",
+      "Run Date": "2026-03-12",
+      "Time Range Covered": "Last 5 days",
+      "Section": "Emerging Opportunities",
+      "Summary": "The strongest near-term opportunity is a solo AI operator stack: Projects as knowledge layer, scheduled tasks as trigger, deep research as intelligence pass, and Make/Zapier as execution layer.",
+      "Overall Confidence / Notes": "This is a practical one-person operating model rather than science-fiction theater."
+    }
+  ],
+  "foundationalTools": [
+    {
+      "Tool Name": "Softr",
+      "Use Case": "Build no-code client portals, dashboards, and internal business apps on top of sheet/Airtable-style workflows."
+    },
+    {
+      "Tool Name": "Make",
+      "Use Case": "No-code AI workflow builder with visible reasoning and file-aware workflows."
+    }
+  ],
+  "updatedAt": "2026-03-19T23:35:31.271Z"
+};
