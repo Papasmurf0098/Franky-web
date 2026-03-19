@@ -1,0 +1,14 @@
+{
+  "name": "franky-web",
+  "version": "1.0.0",
+  "description": "Franky Frontier — At-Home AI Opportunity Radar dashboard",
+  "private": true,
+  "scripts": {
+    "start": "serve -s . -l 3000",
+    "dev": "serve -s . -l 3000 --no-clipboard",
+    "server": "node server.js"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
