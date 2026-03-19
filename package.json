@@ -1,0 +1,10 @@
+{
+  "name": "franky-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static dashboard for Franky Frontier.",
+  "scripts": {
+    "start": "python3 -m http.server 4173 --bind 0.0.0.0",
+    "dev": "python3 -m http.server 4173 --bind 0.0.0.0"
+  }
+}

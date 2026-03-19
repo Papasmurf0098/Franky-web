@@ -312,7 +312,7 @@
           <h1>Franky Frontier</h1>
           <p>At-Home AI Opportunity Radar. GitHub-first dashboard for findings, summaries, watchlist movement, and foundational tools — built to stay practical, current, and allergic to hype.</p>
         </div>
-        <div class="hero-badge">V2 JSON</div>
+        <div class="hero-badge" id="heroBadge">V2 JSON</div>
       </div>
       <div class="hero-grid" id="heroGrid"></div>
     </section>
@@ -436,7 +436,8 @@
 
   <script>
     const FRANKY_CONFIG = {
-      dataUrl: "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec"
+      dataUrl: "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec",
+      fallbackUrl: "./data/sample-data.json"
     };
 
     const state = {
@@ -444,6 +445,7 @@
       summaries: [],
       watchlist: [],
       tools: [],
+      dataSource: "",
       filters: {
         runId: "",
         priority: "",
@@ -458,6 +460,7 @@
 
     const els = {
       heroGrid: document.getElementById("heroGrid"),
+      heroBadge: document.getElementById("heroBadge"),
       summaryGrid: document.getElementById("summaryGrid"),
       findingsGrid: document.getElementById("findingsGrid"),
       watchGrid: document.getElementById("watchGrid"),
@@ -513,6 +516,7 @@
         atHomeUse: pick(item, "at_home_use", "At Home Use"),
         sourceName: pick(item, "source_name", "Source Name"),
         sourceTier: pick(item, "source_tier", "Source Tier"),
+        sourceCombined: pick(item, "source_name_tier", "Source + Source Tier"),
         sourceUrl: pick(item, "source_url", "Source URL"),
         access: pick(item, "device_access_technical_barrier", "Device Access + Technical Barrier"),
         priority: pick(item, "priority", "Priority"),
@@ -527,6 +531,7 @@
         runId: pick(item, "run_id", "Run ID"),
         runDate: pick(item, "run_date", "Run Date"),
         range: pick(item, "time_range", "Time Range", "Time Range Covered"),
+        section: pick(item, "section", "Section"),
         summary: pick(item, "summary", "Summary"),
         topTakeaway: pick(item, "top_takeaway", "Top Takeaway"),
         findingsCount: pick(item, "num_findings", "Num Findings"),
@@ -567,17 +572,38 @@
       }));
     }
 
+    async function fetchDataPayload(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+      return response.json();
+    }
+
     async function loadFrankyData() {
-      const response = await fetch(FRANKY_CONFIG.dataUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Data feed returned ${response.status}`);
-      const payload = await response.json();
-      return {
-        findings: normalizeFindings(payload.findings || []),
-        summaries: normalizeSummaries(payload.summaries || []),
-        watchlist: normalizeWatchlist(payload.watchlist || []),
-        tools: normalizeTools(payload.foundationalTools || payload.tools || []),
-        updatedAt: payload.updatedAt || ""
-      };
+      const dataSources = [
+        { label: "remote", url: FRANKY_CONFIG.dataUrl },
+        { label: "local fallback", url: FRANKY_CONFIG.fallbackUrl }
+      ];
+      let lastError = new Error("No data source configured.");
+
+      for (const source of dataSources) {
+        if (!source.url) continue;
+        try {
+          const payload = await fetchDataPayload(source.url);
+          return {
+            findings: normalizeFindings(payload.findings || []),
+            summaries: normalizeSummaries(payload.summaries || []),
+            watchlist: normalizeWatchlist(payload.watchlist || []),
+            tools: normalizeTools(payload.foundationalTools || payload.tools || []),
+            updatedAt: payload.updatedAt || "",
+            dataSource: source.label
+          };
+        } catch (error) {
+          console.warn(`Unable to load ${source.label} data source.`, error);
+          lastError = error;
+        }
+      }
+
+      throw lastError;
     }
 
     function getLatestRunId() {
@@ -635,18 +661,26 @@
 
     function renderSummaries() {
       const latestRunId = getLatestRunId();
-      const row = state.summaries.find(item => item.runId === latestRunId);
+      const rows = state.summaries.filter(item => item.runId === latestRunId);
+      const row = rows.find(item => item.topTakeaway || item.findingsCount || item.watchCount) || rows[0];
 
-      if (!row) {
+      if (!rows.length || !row) {
         els.summaryGrid.innerHTML = `<div class="empty">No summaries found.</div>`;
         return;
       }
 
+      const sectionTakeaway = rows.find(item => /takeaway/i.test(item.section || ""));
+      const sectionWhatIsNew = rows.find(item => /what.?s\s+new/i.test(item.section || ""));
+      const summaryText = row.summary || sectionWhatIsNew?.summary || rows[0]?.summary || "—";
+      const takeawayText = row.topTakeaway || sectionTakeaway?.summary || summaryText || "—";
+      const findingsCount = Number(row.findingsCount) || state.findings.filter(item => item.runId === latestRunId).length;
+      const watchCount = Number(row.watchCount) || state.watchlist.filter(item => item.runId === latestRunId).length;
+
       const blocks = [
-        { label: "Top Takeaway", value: row.topTakeaway || "—" },
-        { label: "Summary", value: row.summary || "—" },
+        { label: "Top Takeaway", value: takeawayText },
+        { label: "Summary", value: summaryText },
         { label: "Coverage Window", value: row.range || "—" },
-        { label: "Findings / Watchlist", value: `${row.findingsCount || 0} / ${row.watchCount || 0}` }
+        { label: "Findings / Watchlist", value: `${findingsCount} / ${watchCount}` }
       ];
 
       els.summaryGrid.innerHTML = blocks.map(block => `
@@ -697,7 +731,7 @@
 
       els.findingsGrid.innerHTML = findings.map(item => {
         const url = safeUrl(item.sourceUrl);
-        const sourceLabel = [item.sourceName, item.sourceTier].filter(Boolean).join(" • ") || "Source not set";
+        const sourceLabel = [item.sourceName, item.sourceTier].filter(Boolean).join(" • ") || item.sourceCombined || "Source not set";
         return `
         <article class="card">
           <div class="finding-head">
@@ -818,6 +852,10 @@
         state.summaries = data.summaries || [];
         state.watchlist = data.watchlist || [];
         state.tools = data.tools || [];
+        state.dataSource = data.dataSource || "";
+        if (els.heroBadge && state.dataSource) {
+          els.heroBadge.textContent = state.dataSource === "local fallback" ? "V2 JSON - Local fallback" : "V2 JSON - Remote";
+        }
         populateRunFilter();
         renderHero();
         renderSummaries();

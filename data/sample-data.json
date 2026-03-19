@@ -1,0 +1,102 @@
+{
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "date": "2026-03-19",
+      "run_id": "2026-03-19-LOCAL",
+      "headline": "ChatGPT Projects now supports richer source linking for recurring work",
+      "category": "Workspace / knowledge layer",
+      "tool_or_company": "OpenAI",
+      "summary": "Projects can hold linked sources and reusable notes, making recurring research loops easier for solo operators.",
+      "at_home_use": "Use one project per client niche to track ongoing updates without rebuilding context every session.",
+      "source_name": "OpenAI Help Center",
+      "source_tier": "Tier 1",
+      "source_url": "https://help.openai.com/",
+      "device_access_technical_barrier": "Both | No-code",
+      "priority": "High",
+      "repeat_relevance_marker": "R1",
+      "status": "Active",
+      "notes": ""
+    },
+    {
+      "finding_id": "F-002",
+      "date": "2026-03-19",
+      "run_id": "2026-03-19-LOCAL",
+      "headline": "Make improved AI workflow handling for files and step reasoning",
+      "category": "Workflow automation",
+      "tool_or_company": "Make",
+      "summary": "The platform continues to improve file-aware workflows and better visibility into agent behavior.",
+      "at_home_use": "Automate lead intake docs and routing with low-code scenarios.",
+      "source_name": "Make Blog",
+      "source_tier": "Tier 1",
+      "source_url": "https://www.make.com/en/blog",
+      "device_access_technical_barrier": "Laptop-first | Low-code",
+      "priority": "Medium",
+      "repeat_relevance_marker": "",
+      "status": "Watching",
+      "notes": ""
+    }
+  ],
+  "summaries": [
+    {
+      "run_id": "2026-03-19-LOCAL",
+      "run_date": "2026-03-19",
+      "time_range": "Last 24 hours",
+      "summary": "The strongest practical signal is better persistence and automation control for solo AI workflows.",
+      "top_takeaway": "Use persistent context plus automation together instead of isolated prompts.",
+      "num_findings": 2,
+      "num_watchlist_items": 1,
+      "status": "Ready",
+      "link_to_report": "https://example.com/report/franky-local"
+    },
+    {
+      "run_id": "2026-03-19-LOCAL",
+      "run_date": "2026-03-19",
+      "time_range": "Last 24 hours",
+      "section": "Key Things to Watch Going Forward",
+      "summary": "Watch connector reliability, pricing pressure, and how fast safety controls become standard.",
+      "status": "Ready"
+    }
+  ],
+  "watchlist": [
+    {
+      "watch_id": "W-001",
+      "run_id": "2026-03-19-LOCAL",
+      "date_added": "2026-03-19",
+      "item_trend": "Persistent project memory as a solo operating layer",
+      "category": "Frontier watch",
+      "why_watched": "If persistent project context stays reliable, it can reduce repeated setup work for recurring research.",
+      "what_needs_confirmation": "Connector reliability and sustained quality over longer usage windows.",
+      "source_lead": "OpenAI",
+      "priority": "High",
+      "status": "Watching",
+      "last_reviewed": "2026-03-19",
+      "notes": ""
+    }
+  ],
+  "foundationalTools": [
+    {
+      "tool_id": "T-001",
+      "date_added": "2026-03-19",
+      "tool_name": "Softr",
+      "category": "No-code app layer",
+      "core_use_case": "Build lightweight client dashboards and portals quickly.",
+      "accessibility": "No-code",
+      "pricing_note": "Free tier available",
+      "why_foundational": "Fast way to turn data and workflows into client-facing UI.",
+      "status": "Active"
+    },
+    {
+      "tool_id": "T-002",
+      "date_added": "2026-03-19",
+      "tool_name": "Make",
+      "category": "Workflow orchestration",
+      "core_use_case": "Automate multi-step operations with file-aware agents.",
+      "accessibility": "Low-code",
+      "pricing_note": "Paid tiers scale with usage",
+      "why_foundational": "Strong for repeatable task chains and integrations.",
+      "status": "Active"
+    }
+  ],
+  "updatedAt": "2026-03-19T00:00:00Z"
+}
