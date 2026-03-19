@@ -1,0 +1,11 @@
+{
+  "name": "franky-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local run configuration for the Franky Frontier dashboard.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node --check server.mjs"
+  }
+}
