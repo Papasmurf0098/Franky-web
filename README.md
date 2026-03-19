@@ -26,6 +26,12 @@ The server honors the `PORT` environment variable, so this also works:
 PORT=3000 python3 serve.py
 ```
 
+To force the app to use the bundled snapshot instead of the live feed, open:
+
+```text
+http://127.0.0.1:8000/?source=local
+```
+
 ## Alternative: open the file directly
 
 You can also open `index.html` directly in a browser. The app will try the live data feed first and fall back to the bundled local snapshot if the live feed cannot be reached.

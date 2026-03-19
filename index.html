@@ -437,6 +437,7 @@
 
   <script src="./franky-data.local.js"></script>
   <script>
+    const FRANKY_URL_PARAMS = new URLSearchParams(window.location.search);
     const FRANKY_CONFIG = {
       dataUrl: "https://script.google.com/macros/s/AKfycbx7ZliIT8BiqTSWsL2QhFUcTbJlXdDPcBXRrJxlkvkXcNbbhqMxvew1_mdhN8ruT80/exec"
     };
@@ -593,6 +594,14 @@
     }
 
     async function loadFrankyData() {
+      if (FRANKY_URL_PARAMS.get("source") === "local") {
+        const bundled = getBundledSnapshot();
+        return {
+          ...bundled,
+          sourceDetail: "Using the bundled snapshot because ?source=local was requested."
+        };
+      }
+
       try {
         const response = await fetch(FRANKY_CONFIG.dataUrl, { cache: "no-store" });
         if (!response.ok) throw new Error(`Data feed returned ${response.status}`);
